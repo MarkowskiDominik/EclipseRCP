@@ -10,7 +10,7 @@ public class Book {
 	private String authors;
 
 	@JsonCreator
-	public Book(@JsonProperty("id") long id, @JsonProperty("title") String title,
+	public Book(@JsonProperty("id") Long id, @JsonProperty("title") String title,
 			@JsonProperty("authors") String authors) {
 		this.id = id;
 		this.title = title;

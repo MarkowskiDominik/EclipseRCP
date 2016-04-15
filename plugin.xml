@@ -36,39 +36,83 @@
             id="markowski.library.booksListView"
             name="BookList">
       </view>
+      <view
+            class="markowski.library.view.BookDetailsView"
+            id="markowski.library.bookDetailsView"
+            name="BookDetails"
+            restorable="true">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
             targetID="markowski.library.perspective">
          <view
-               id="markowski.library.view"
-               minimized="true"
-               relationship="left"
-               relative="org.eclipse.ui.editorss"
-               visible="true">
-         </view>
-         <view
                id="markowski.library.booksListView"
                minimized="false"
-               relationship="right"
-               relative="markowski.library.booksListView"
+               relationship="left"
+               relative="org.eclipse.ui.editorss"
                standalone="true">
+         </view>
+         <view
+               id="markowski.library.bookDetailsView"
+               minimized="false"
+               relationship="right"
+               relative="markowski.library.booksListView">
          </view>
       </perspectiveExtension>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:org.eclipse.ui.main.menu">
+            locationURI="popup:ID">
          <menu
                label="File">
             <command
                   commandId="org.eclipse.ui.file.exit"
                   label="Exit">
             </command>
+            <command
+                  commandId="markowski.library.addNewBook"
+                  label="Add"
+                  style="push">
+            </command>
+            <command
+                  commandId="markowski.library.editSelectedBook"
+                  label="Edit"
+                  style="push">
+            </command>
+            <command
+                  commandId="markowski.library.deleteSelectedBook"
+                  label="Delete"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.ui.help.aboutAction"
+                  label="About"
+                  style="push">
+            </command>
          </menu>
       </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="markowski.library.menuContribution1">
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="markowski.library.handler.AddNewBook"
+            commandId="markowski.library.addNewBook">
+      </handler>
+      <handler
+            class="markowski.library.handler.EditSelectedBook"
+            commandId="markowski.library.editSelectedBook">
+      </handler>
+      <handler
+            class="markowski.library.handler.DeleteSelectedBook"
+            commandId="markowski.library.deleteSelectedBook">
+      </handler>
    </extension>
 
 </plugin>
