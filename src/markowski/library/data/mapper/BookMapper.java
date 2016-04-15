@@ -8,7 +8,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import markowski.library.data.Book;
+import markowski.library.data.model.Book;
 
 public class BookMapper {
 	private static ObjectMapper mapper = new ObjectMapper();

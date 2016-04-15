@@ -1,44 +1,41 @@
-package markowski.library.data;
+package markowski.library.data.model;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Book {
+public class Book extends ModelObject {
 
 	private Long id;
 	private String title;
 	private String authors;
+	private List<String> lendHistory = new ArrayList<>();
 
 	@JsonCreator
-	public Book(@JsonProperty("id") Long id, @JsonProperty("title") String title,
+	public Book(@JsonProperty(defaultValue = "null", value = "id") Long id, @JsonProperty("title") String title,
 			@JsonProperty("authors") String authors) {
 		this.id = id;
 		this.title = title;
 		this.authors = authors;
+		lendHistory.add("empty history");
 	}
 
 	public Long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public String getTitle() {
 		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	public String getAuthors() {
 		return authors;
 	}
 
-	public void setAuthors(String authors) {
-		this.authors = authors;
+	public List<String> getLendHistory() {
+		return lendHistory;
 	}
 
 	@Override
