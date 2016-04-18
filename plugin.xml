@@ -65,54 +65,93 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="popup:ID">
+            locationURI="menu:org.eclipse.ui.main.menu">
          <menu
                label="File">
             <command
-                  commandId="org.eclipse.ui.file.exit"
-                  label="Exit">
-            </command>
-            <command
-                  commandId="markowski.library.addNewBook"
+                  commandId="markowski.library.addCommand"
                   label="Add"
                   style="push">
             </command>
             <command
-                  commandId="markowski.library.editSelectedBook"
+                  commandId="markowski.library.editCommand"
                   label="Edit"
                   style="push">
             </command>
             <command
-                  commandId="markowski.library.deleteSelectedBook"
+                  commandId="markowski.library.deleteCommand"
                   label="Delete"
                   style="push">
             </command>
             <command
-                  commandId="org.eclipse.ui.help.aboutAction"
-                  label="About"
-                  style="push">
+                  commandId="org.eclipse.ui.file.exit"
+                  label="Exit">
             </command>
          </menu>
       </menuContribution>
-      <menuContribution
+            <menuContribution
             allPopups="false"
-            locationURI="markowski.library.menuContribution1">
+            locationURI="popup:markowski.library.booksListView">
+         <command
+               commandId="markowski.library.addCommand"
+               label="Add new book"
+               style="push">
+         </command>
+         <command
+               commandId="markowski.library.editCommand"
+               label="Edit book"
+               style="push"
+               tooltip="Edit selected book information">
+         </command>
+         <command
+               commandId="markowski.library.deleteCommand"
+               label="Delete book"
+               style="push"
+               tooltip="Delete selected book from library">
+         </command>
       </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
       <handler
             class="markowski.library.handler.AddNewBookHandler"
-            commandId="markowski.library.addNewBook">
+            commandId="markowski.library.addCommand">
       </handler>
       <handler
             class="markowski.library.handler.EditSelectedBookHandler"
-            commandId="markowski.library.editSelectedBook">
+            commandId="markowski.library.editCommand">
       </handler>
       <handler
             class="markowski.library.handler.DeleteSelectedBookHandler"
-            commandId="markowski.library.deleteSelectedBook">
+            commandId="markowski.library.deleteCommand">
       </handler>
+      <handler
+            class="markowski.library.handler.ShowSelected"
+            commandId="markowski.library.showSelected">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="markowski.library.handler.AddNewBookHandler"
+            id="markowski.library.addCommand"
+            name="addCommand">
+      </command>
+      <command
+            defaultHandler="markowski.library.handler.EditSelectedBookHandler"
+            id="markowski.library.editCommand"
+            name="editCommand">
+      </command>
+      <command
+            defaultHandler="markowski.library.handler.DeleteSelectedBookHandler"
+            id="markowski.library.deleteCommand"
+            name="deleteCommand">
+      </command>
+      <command
+            defaultHandler="markowski.library.handler.ShowSelected"
+            id="markowski.library.showSelectedCommand"
+            name="showSelectedCommand">
+      </command>
    </extension>
 
 </plugin>

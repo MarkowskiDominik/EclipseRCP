@@ -1,32 +1,38 @@
 package markowski.library.view;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.part.ViewPart;
-
-import markowski.library.data.model.Book;
-import markowski.library.data.model.LibraryModel;
-
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Text;
-
 import java.util.logging.Logger;
 
 import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ViewerSupport;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.part.ViewPart;
+
+import markowski.library.data.model.Book;
+import markowski.library.data.model.LibraryModel;
+import markowski.library.filter.BookFilter;
+
+import org.eclipse.core.databinding.DataBindingContext;
 
 public class BookListView extends ViewPart {
 
 	private Logger LOG = Logger.getLogger(getClass().getName());
 	private LibraryModel model = LibraryModel.INSTANCE;
+	private static final String[] PROPERTY_NAMES = new String[] { "id", "title", "authors" };
+	private DataBindingContext dataBindingContext = new DataBindingContext();
 
 	private Text filterTitleText;
 	private Text filterAuthorText;
@@ -44,16 +50,12 @@ public class BookListView extends ViewPart {
 
 		createFilterComposites(parent);
 
-		TableViewer tableViewer = new TableViewer(parent, SWT.BORDER | SWT.FULL_SELECTION);
-		createTableViewerColumns(tableViewer);
-		tableViewer.setContentProvider(new ArrayContentProvider());
-		table = tableViewer.getTable();
-		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		ViewerSupport.bind(tableViewer, model.getBooks(), BeanProperties.values(Book.class, new String[]{"id","title", "authors"}));
-		getSite().setSelectionProvider(tableViewer);
+		createTableViewer(parent);
 	}
 
 	private void createTitleLabel(Composite parent) {
+		LOG.info("createTitleLabel");
+
 		Label bookListLabel = new Label(parent, SWT.NONE);
 		bookListLabel.setText("Books list");
 		bookListLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
@@ -61,20 +63,54 @@ public class BookListView extends ViewPart {
 	}
 
 	private void createFilterComposites(Composite parent) {
+		LOG.info("createFilterComposites");
+
 		Label filterTitleLabel = new Label(parent, SWT.NONE);
 		filterTitleLabel.setText("Title");
 		filterTitleLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		filterTitleText = new Text(parent, SWT.BORDER | SWT.SEARCH);
 		filterTitleText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		IObservableValue widgetValue = WidgetProperties.text(SWT.Modify).observe(filterTitleText);
+		IObservableValue modelValue = BeanProperties.value(LibraryModel.class, "filterTitleText").observe(model);
+		dataBindingContext.bindValue(widgetValue, modelValue);
 
 		Label filterAuthorLabel = new Label(parent, SWT.NONE);
 		filterAuthorLabel.setText("Author");
 		filterAuthorLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		filterAuthorText = new Text(parent, SWT.BORDER | SWT.SEARCH);
 		filterAuthorText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+		widgetValue = WidgetProperties.text(SWT.Modify).observe(filterAuthorText);
+		modelValue = BeanProperties.value("filterAuthorText", LibraryModel.class).observe(model);
+		dataBindingContext.bindValue(widgetValue, modelValue);
+	}
+
+	private void createTableViewer(Composite parent) {
+		LOG.info("createTableViewer");
+
+		TableViewer tableViewer = new TableViewer(parent, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI);
+		tableViewer.setContentProvider(new ArrayContentProvider());
+		createTableViewerColumns(tableViewer);
+
+		ViewerSupport.bind(tableViewer, model.getBooks(),
+				BeanProperties.values(Book.class, PROPERTY_NAMES));
+
+		table = tableViewer.getTable();
+		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+//		tableViewer.setFilters(new BookFilter());
+
+		MenuManager menuManager = new MenuManager();
+		table.setMenu(menuManager.createContextMenu(table));
+
+		getSite().setSelectionProvider(tableViewer);
+		getSite().registerContextMenu(menuManager, tableViewer);
+
 	}
 
 	private void createTableViewerColumns(TableViewer tableViewer) {
+		LOG.info("createTableViewerColumns");
+
 		TableViewerColumn tableViewerColumnId = new TableViewerColumn(tableViewer, SWT.NONE);
 		TableColumn columnId = tableViewerColumnId.getColumn();
 		columnId.setText("ID");
@@ -117,5 +153,4 @@ public class BookListView extends ViewPart {
 		// TODO Auto-generated method stub
 
 	}
-
 }
