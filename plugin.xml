@@ -133,22 +133,18 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="markowski.library.handler.AddNewBookHandler"
             id="markowski.library.addCommand"
             name="addCommand">
       </command>
       <command
-            defaultHandler="markowski.library.handler.EditSelectedBookHandler"
             id="markowski.library.editCommand"
             name="editCommand">
       </command>
       <command
-            defaultHandler="markowski.library.handler.DeleteSelectedBookHandler"
             id="markowski.library.deleteCommand"
             name="deleteCommand">
       </command>
       <command
-            defaultHandler="markowski.library.handler.ShowSelected"
             id="markowski.library.showSelectedCommand"
             name="showSelectedCommand">
       </command>
