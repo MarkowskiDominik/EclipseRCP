@@ -20,6 +20,7 @@ public class Book extends ModelObject {
 		this.title = title;
 		this.authors = authors;
 		lendHistory.add("empty history");
+		lendHistory.add("long time ago in a galaxy far far away");
 	}
 
 	public Long getId() {

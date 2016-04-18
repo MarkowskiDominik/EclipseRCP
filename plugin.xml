@@ -110,6 +110,29 @@
                tooltip="Delete selected book from library">
          </command>
       </menuContribution>
+            <menuContribution
+                  allPopups="false"
+                  locationURI="toolbar:org.eclipse.ui.main.toolbar">
+               <toolbar
+                     id="de.vogella.rcp.intro.commands.toolbar.Hello">
+                  <command
+                        commandId="markowski.library.HelloCommand"
+                        icon="icons/alt_window_16.gif"
+                        label="Hello"
+                        style="push">
+                  </command>
+               </toolbar>
+            </menuContribution>
+            <menuContribution
+                  allPopups="false"
+                  locationURI="toolbar:markowski.library.bookDetailsView">
+               <command
+                     commandId="markowski.library.HelloCommand"
+                     icon="icons/alt_window_16.gif"
+                     label="Hello"
+                     style="push">
+               </command>
+            </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -126,8 +149,8 @@
             commandId="markowski.library.deleteCommand">
       </handler>
       <handler
-            class="markowski.library.handler.ShowSelected"
-            commandId="markowski.library.showSelected">
+            class="markowski.library.handler.Hello"
+            commandId="markowski.library.HelloCommand">
       </handler>
    </extension>
    <extension
@@ -145,8 +168,8 @@
             name="deleteCommand">
       </command>
       <command
-            id="markowski.library.showSelectedCommand"
-            name="showSelectedCommand">
+            id="markowski.library.HelloCommand"
+            name="HelloCommand">
       </command>
    </extension>
 
