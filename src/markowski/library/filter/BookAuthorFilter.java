@@ -8,7 +8,7 @@ import markowski.library.data.model.LibraryModel;
 
 public class BookAuthorFilter extends ViewerFilter {
 
-	LibraryModel model = LibraryModel.INSTANCE;
+	private LibraryModel model = LibraryModel.INSTANCE;
 	
     public boolean select(Viewer viewer, Object parentElement, Object element) {
     	String filterAuthorsText = model.getFilterAuthorsText();

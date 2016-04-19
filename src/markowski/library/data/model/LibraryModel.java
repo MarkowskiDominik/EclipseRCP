@@ -42,13 +42,13 @@ public class LibraryModel extends ModelObject {
 	public void addNewBook(Book book) {
 		books.add(dataProvider.addNewBook(book));
 	}
-	
+
 	public void deleteBook(Book book) {
-		
+
 	}
-	
+
 	public void editBook(Book book) {
-		
+
 	}
 
 	public String getFilterTitleText() {
@@ -56,7 +56,7 @@ public class LibraryModel extends ModelObject {
 	}
 
 	public void setFilterTitleText(String filterTitleText) {
-	    firePropertyChange("filterTitleText", this.filterTitleText, this.filterTitleText = filterTitleText);
+		firePropertyChange("filterTitleText", this.filterTitleText, this.filterTitleText = filterTitleText);
 	}
 
 	public String getFilterAuthorsText() {
@@ -64,6 +64,6 @@ public class LibraryModel extends ModelObject {
 	}
 
 	public void setFilterAuthorsText(String filterAuthorsText) {
-	    firePropertyChange("filterAuthorsText", this.filterAuthorsText, this.filterAuthorsText = filterAuthorsText);
+		firePropertyChange("filterAuthorsText", this.filterAuthorsText, this.filterAuthorsText = filterAuthorsText);
 	}
 }

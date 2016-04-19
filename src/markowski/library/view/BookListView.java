@@ -33,7 +33,7 @@ import org.eclipse.core.databinding.DataBindingContext;
 public class BookListView extends ViewPart {
 
 	private Logger LOG = Logger.getLogger(getClass().getName());
-	private LibraryModel model = LibraryModel.INSTANCE;
+	private static LibraryModel model = LibraryModel.INSTANCE;
 	private static final String[] PROPERTY_NAMES = new String[] { "id", "title", "authors" };
 	private DataBindingContext dataBindingContext = new DataBindingContext();
 

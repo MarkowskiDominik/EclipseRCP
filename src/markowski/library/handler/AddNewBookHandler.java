@@ -14,7 +14,7 @@ public class AddNewBookHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		AddNewBookDialog addBookDialog = new AddNewBookDialog(null);
-	    
+
 		if (addBookDialog.open() == Window.OK) {
 			Book bookToAdd = new Book(null, addBookDialog.getBookTitle(), addBookDialog.getBookAuthors());
 			LibraryModel.INSTANCE.addNewBook(bookToAdd);
