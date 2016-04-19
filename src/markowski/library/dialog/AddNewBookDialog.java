@@ -1,10 +1,11 @@
 package markowski.library.dialog;
 
+import org.eclipse.core.databinding.validation.IValidator;
+import org.eclipse.core.databinding.validation.ValidationStatus;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -13,12 +14,16 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Button;
 
 public class AddNewBookDialog extends Dialog {
 	private Text bookTitleText;
 	private Text bookAuthorsText;
-	private String bookTitle = "";
-	private String bookAuthors = "";
+	
+	private String bookTitle;
+	private String bookAuthors;
+	
+	private Button buttonOk;
 
 	public AddNewBookDialog(Shell parentShell) {
 		super(parentShell);
@@ -37,44 +42,36 @@ public class AddNewBookDialog extends Dialog {
 		layout.marginRight = 5;
 		layout.marginLeft = 10;
 		container.setLayout(layout);
+		
+//		IValidator validator = new IValidator() {
+//			@Override
+//			public IStatus validate(Object value) {
+//				if (value != null && !value.toString().isEmpty()) {
+//					return ValidationStatus.ok();
+//				}
+//				return ValidationStatus.error("Field is empty");
+//			}
+//		};
 
 		Label bookTitleLabel = new Label(container, SWT.NONE);
 		bookTitleLabel.setText("Title:");
 
 		bookTitleText = new Text(container, SWT.BORDER);
 		bookTitleText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		bookTitleText.setText(bookTitle);
-		bookTitleText.addModifyListener(new ModifyListener() {
-
-			@Override
-			public void modifyText(ModifyEvent e) {
-				Text textWidget = (Text) e.getSource();
-				bookTitle = textWidget.getText();
-			}
-		});
-
+		
 		Label bookAuthorsLabel = new Label(container, SWT.NONE);
-		GridData gd_lblNewLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_lblNewLabel.horizontalIndent = 1;
-		bookAuthorsLabel.setLayoutData(gd_lblNewLabel);
 		bookAuthorsLabel.setText("Authors:");
 
 		bookAuthorsText = new Text(container, SWT.BORDER);
 		bookAuthorsText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		bookAuthorsText.setText(bookAuthors);
-		bookAuthorsText.addModifyListener(new ModifyListener() {
 
-			@Override
-			public void modifyText(ModifyEvent e) {
-				bookAuthors = ((Text) e.getSource()).getText();
-			}
-		});
 		return container;
 	}
 
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		createButton(parent, IDialogConstants.OK_ID, "Add book", true);
+		buttonOk = createButton(parent, IDialogConstants.OK_ID, "Add book", true);
+//		buttonOk.setEnabled(false);
 		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
 	}
 
